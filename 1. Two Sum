@@ -1,19 +1,22 @@
-//Es facil identificar la complejidad de este problema y podemos decir que es un O(n2) 
-//ya que estamos usando la fuerza bruta para implementar la solucion, lo que quiere decir que estamos 
-//analizando todo con todos (a pesar de que j = i+1) su comlejidad matemática se ve así: 
-//El numer total de avaluaciones es de (n*(n-1))/2, teniendo en cuenta el tamaño maximo que es de 10^4 
-//Podemos ver que el total de evaluaciones es de 49.995.000, esto al ser una operacion compleja puede ser en menos de un segundo 
-//pero esto no es nada eficiente ya que si fuera 10^5, a no ser que tengamos una super computadora, 
-//nos daria un error de timeExcept ya que la cantidad de calculos se iria a mas de 5mil millones
-//Eh visto que esto se puede volver un problema de solucion lineal, es decir, O(n), usando mapas, 
-//aunque aun no sé usar muy bien esa estructura de datos, he visto que no es necesario hacer un bucle anidado
+//Al usar mapas esto se hace completmente optimo porque al usar los mapas
+//solo tenemos que usar un ciclo entonces su complejidad es lineal
+//En el peor de los casos se guardan los 10.000 elementos en el mapa y ese sería
+//el numero maximo de evaluacione
+//Aquí es importante tener en cuenta que se gasta mucha mas memoria que en 
+//el metodo de la fuerza bruta
+
 
 function twoSum(nums: number[], target: number): number[] {
-    for(let i = 0; i < nums.length; i++){
-        for(let j = i+1; j < nums.length; j++){
-            if(nums[i] + nums[j] == target){
-                return [i,j]
-            }
+    
+    const mapa = new Map<number, number>(); 
+
+    for (let i = 0; i < nums.length; i++) {
+        const aux = target - nums[i];
+        if (mapa.has(aux)) {
+            return [mapa.get(aux)!, i];
         }
+        mapa.set(nums[i], i);
     }
-};
+    
+    return [];
+}
